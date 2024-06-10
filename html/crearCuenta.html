@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Manos Mexicanas</title>
-  <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
   <style>
     .sidebar {
       padding: 10px 40px ;
@@ -109,7 +109,7 @@
           <div class="row align-items-center">
             <!--SE CREAN COLUMNAS CON TAMAÑOS PARA EL LOGO-->
             <div class="col-lg-2" id="log">
-              <img src="img/Frame-1.png" alt="" width="100px" height="60px">
+              <img src="../img/logo.png" alt="" width="100px" height="60px">
             </div>
              <!--SE CREAN COLUMNAS CON TAMAÑOS PARA LA BARRA DE BUSQUEDA-->
             <div class="col-lg-6">
@@ -120,9 +120,9 @@
              <!--SE CREAN COLUMNAS CON TAMAÑOS PARA LOS ENLACES-->
             <div class="col-lg-4">
               <nav id="nave">
-                <a class="me-5 py-2 link-body-emphasis text-decoration-none" href="html/crearCuenta.html">Crear cuenta</a>
-                <a class="me-5 py-2 link-body-emphasis text-decoration-none" href="html/login.html">Ingresar</a>
-                <img src="img/carrito.png" alt="" width="35px" height="35px">
+                <a class="me-5 py-2 link-body-emphasis text-decoration-none" href="../html/crearCuenta.html">Crear cuenta</a>
+                <a class="me-5 py-2 link-body-emphasis text-decoration-none" href="../html/login.html">Ingresar</a>
+                <img src="../img/carrito.png" alt="" width="35px" height="35px">
               </nav>
             </div>
           </div>
@@ -135,21 +135,21 @@
       <div class="col-md-6 sidebar bg-light">
         <h4 class="px-1" style="text-align: center;">CREAR CUENTA</h4>
          <!--SE CREAN CAJAS PARA CADA FILTRO-->
-         <form action="insert.php" method="post" class="formulario">
+         <form action="clientes.html" method="get" class="formulario" id="formRegistro">
             <h8>Ingresa tus datos para crear una cuenta nueva.</h8><br>
             <br>
             <label for="nombre">Nombre</label>
-            <input class="form-control mb-3" type="text" name="Nombre" id="nombre" placeholder="Ingrese su nombre" maxlength="50">
-            <label for="direccion">Direccion principal</label>
-            <input class="form-control mb-3" type="text" name="Direccion" id="Direccion" placeholder="Ingrese su Direccion" maxlength="50">
+            <input class="form-control mb-3" type="text" name="nombre" id="nombre" placeholder="Ingrese su nombre" maxlength="50">
             <label for="telefono">Telefono</label>
-            <input class="form-control mb-3" type="text" name="Telefono" id="Telefono" placeholder="Ingrese su Telefono" maxlength="12">
+            <input class="form-control mb-3" type="text" name="telefono" id="telefono" placeholder="Ingrese su Telefono" maxlength="12">
             <label for="contraseña">Correo electronico</label>
             <input class="form-control mb-3" type="text" name="email" id="email" placeholder="ejemplo@gmail.com" required>
+            <label for="direccion">Direccion principal</label>
+            <input class="form-control mb-3" type="text" name="direccion" id="direccion" placeholder="Ingrese su direccion" maxlength="50">
             <label for="contraseña">Contraseña</label>
-            <input class="form-control mb-3" type="password" name="Contraseña1" id="Contraseña1" placeholder="" required>
+            <input class="form-control mb-3" type="password" name="contraseña1" id="contraseña1" placeholder="" required>
             <label for="contraseña2">Confirmar contraseña</label>
-            <input class="form-control mb-3" type="password" name="Contraseña2" id="Contraseña2" placeholder="" required>
+            <input class="form-control mb-3" type="password" name="contraseña2" id="contraseña2" placeholder="" required>
             
             <center>
               <input class="btn btn-primary" type="submit" value="Ingresar"><br>
@@ -161,6 +161,6 @@
       
     </div>
   </div><br><br>
-  <script src="js/bootstrap.js"></script>
+  <script src="../bootstrap.js"></script>
 </body>
 </html>
