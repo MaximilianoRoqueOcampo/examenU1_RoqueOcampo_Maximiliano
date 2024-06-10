@@ -120,7 +120,7 @@
              <!--SE CREAN COLUMNAS CON TAMAÑOS PARA LOS ENLACES-->
             <div class="col-lg-4">
               <nav id="nave">
-                <a class="me-5 py-2 link-body-emphasis text-decoration-none" href="../html/crearCuenta.html">Crear cuenta</a>
+                <a class="me-5 py-2 link-body-emphasis text-decoration-none" href="../index.html">Catálogo</a>
                 <a class="me-5 py-2 link-body-emphasis text-decoration-none" href="../html/login.html">Ingresar</a>
                 <img src="../img/carrito.png" alt="" width="35px" height="35px">
               </nav>
@@ -129,38 +129,68 @@
         </div>
       </header>
       
-  <div class="container">
-    <!--SE UTILIZA UNA FILA PARA REALIZAR SECCIÓN DE REGISTRO-->
-    <div class="row justify-content-center">
-      <div class="col-md-6 sidebar bg-light">
-        <h4 class="px-1" style="text-align: center;">CREAR CUENTA</h4>
-         <!--SE CREAN CAJAS PARA CADA FILTRO-->
-         <form action="clientes.html" method="get" class="formulario" id="formRegistro">
-            <h8>Ingresa tus datos para crear una cuenta nueva.</h8><br>
-            <br>
-            <label for="nombre">Nombre</label>
-            <input class="form-control mb-3" type="text" name="nombre" id="nombre" placeholder="Ingrese su nombre" maxlength="50">
-            <label for="telefono">Telefono</label>
-            <input class="form-control mb-3" type="text" name="telefono" id="telefono" placeholder="Ingrese su Telefono" maxlength="12">
-            <label for="contraseña">Correo electronico</label>
-            <input class="form-control mb-3" type="text" name="email" id="email" placeholder="ejemplo@gmail.com" required>
-            <label for="direccion">Direccion principal</label>
-            <input class="form-control mb-3" type="text" name="direccion" id="direccion" placeholder="Ingrese su direccion" maxlength="50">
-            <label for="contraseña">Contraseña</label>
-            <input class="form-control mb-3" type="password" name="contraseña1" id="contraseña1" placeholder="" required>
-            <label for="contraseña2">Confirmar contraseña</label>
-            <input class="form-control mb-3" type="password" name="contraseña2" id="contraseña2" placeholder="" required>
-            
-            <center>
-              <input class="btn btn-primary" type="submit" value="Ingresar"><br>
-              <label for="contraseña">¿Ya tienes una cuenta? inicia sesión</label>
-            </center>
-            
-          </form>
-      </div>
-      
+      <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 sidebar bg-light">
+                <h4 class="px-1" style="text-align: center;">CREAR CUENTA</h4>
+                <form class="formulario" id="formRegistro" onsubmit="actualizarRegistro(event)">
+                    <h8>Ingresa tus datos para crear una cuenta nueva.</h8><br><br>
+                    <label for="nombre">Nombre</label>
+                    <input class="form-control mb-3" type="text" name="nombre" id="nombre" placeholder="Ingrese su nombre" maxlength="50">
+                    <label for="telefono">Telefono</label>
+                    <input class="form-control mb-3" type="text" name="telefono" id="telefono" placeholder="Ingrese su Telefono" maxlength="12">
+                    <label for="email">Correo electronico</label>
+                    <input class="form-control mb-3" type="text" name="email" id="email" placeholder="ejemplo@gmail.com" required>
+                    <label for="direccion">Direccion principal</label>
+                    <input class="form-control mb-3" type="text" name="direccion" id="direccion" placeholder="Ingrese su direccion" maxlength="50">
+                    <label for="contraseña1">Contraseña</label>
+                    <input class="form-control mb-3" type="password" name="contraseña1" id="contraseña1" placeholder="" required>
+                    <label for="contraseña2">Confirmar contraseña</label>
+                    <input class="form-control mb-3" type="password" name="contraseña2" id="contraseña2" placeholder="" required>
+                    <input type="hidden" id="id" name="id">
+                    
+                    <center>
+                        <button class="btn btn-primary" type="submit">Registrar</button><br>
+                        <label for="login">¿Ya tienes una cuenta? inicia sesión</label>
+                    </center>
+                </form>
+            </div>
+        </div>
     </div>
-  </div><br><br>
+    <br><br>
+  <script>
+    function getParameter(key) {
+        const address = window.location.search;
+        const parameterList = new URLSearchParams(address);
+        return parameterList.get(key);
+    }
+
+    function fillForm() {
+        document.getElementById('nombre').value = getParameter('nombre') || '';
+        document.getElementById('telefono').value = getParameter('telefono') || '';
+        document.getElementById('email').value = getParameter('email') || '';
+        document.getElementById('direccion').value = getParameter('direccion') || '';
+        document.getElementById('id').value = getParameter('id') || '';
+    }
+
+    function actualizarRegistro(event) {
+        event.preventDefault();
+        
+        const id = document.getElementById('id').value;
+        const nombre = document.getElementById('nombre').value;
+        const telefono = document.getElementById('telefono').value;
+        const email = document.getElementById('email').value;
+        const direccion = document.getElementById('direccion').value;
+        const contraseña1 = document.getElementById('contraseña1').value;
+        const contraseña2 = document.getElementById('contraseña2').value;
+
+        const url = `clientes.html?id=${encodeURIComponent(id)}&nombre=${encodeURIComponent(nombre)}&telefono=${encodeURIComponent(telefono)}&email=${encodeURIComponent(email)}&direccion=${encodeURIComponent(direccion)}&contraseña1=${encodeURIComponent(contraseña1)}&contraseña2=${encodeURIComponent(contraseña2)}`;
+
+        window.location.href = url;
+    }
+
+    window.addEventListener('load', fillForm);
+</script>
   <script src="../bootstrap.js"></script>
 </body>
 </html>

@@ -55,7 +55,7 @@
             <div class="col-lg-4">
               <nav id="nave">
                 <a class="me-5 py-2 link-body-emphasis text-decoration-none" href="../index.html">Catalogo</a>
-                <a class="me-5 py-2 link-body-emphasis text-decoration-none" href="../html/login.html">Ingresar</a>
+                <!--<a class="me-5 py-2 link-body-emphasis text-decoration-none" href="../html/login.html"></a> -->
                 <img src="../img/carrito.png" alt="" width="35px" height="35px">
               </nav>
             </div>
@@ -88,98 +88,149 @@
     
 
       <script>
-        getParameter = (key) => {
-          address = window.location.search; // url de la ventana actual
-          // Objeto de tipo URLSearchParams
-          parameterList = new URLSearchParams(address);
-          // Regresa el valor del parámetro “key”
-          return parameterList.get(key);
+        // Obtener parámetros de la URL
+        function getParameter(key) {
+            const address = window.location.search;
+            const parameterList = new URLSearchParams(address);
+            return parameterList.get(key);
         }
-    
+
+        // Registrar producto, manejar actualización y adición de nuevos registros
         function registrarProducto() {
-    
-          /*Obtener los anteriores
-          var datos = document.getElementsByTagName("table")[0].rows;
-          var data = {}
-          Array.from(datos).forEach(element => {
-            console.log(element.innerHTML);
-          });*/
-    
-          var nombrePersona = getParameter("nombre");
-          var telPersona = getParameter("telefono");
-          var correoPersona = getParameter("email");
-          var direPersona = getParameter("direccion");
-          var contraPersona = getParameter("contraseña1");
-          var contra2Persona = getParameter("contraseña2");
-    
-          i = 5;
-    
-          if (nombrePersona != null && telPersona != null && correoPersona != null && direPersona != null && contraPersona != null && contra2Persona != null) {
-        if (nombrePersona != "" && telPersona != "" && correoPersona != "" && direPersona != "" && contraPersona != "" && contra2Persona != "") {
-            //alert("Se registro un numevo articulo");
-            tabla = document.getElementById("cuerpoTabla");
-            nuevoRegistro = document.createElement("tr");
-    
-            id = document.createElement("th");
-            id.innerHTML = i;
-            id.scope = "row";
-    
-            nombre = document.createElement("td");
-            nombre.innerHTML = nombrePersona;
-    
-            telefono = document.createElement("td");
-            var enlaceTelefono = document.createElement("a");
-            enlaceTelefono.href = `tel:${telPersona}`; // Aquí se define correctamente el href del enlace
-            enlaceTelefono.innerHTML = telPersona;
-    
-            correo = document.createElement("td");
-            var enlaceCorreo = document.createElement("a");
-            enlaceCorreo.href = `mailto:${correoPersona}`; // Aquí se define correctamente el href del enlace
-            enlaceCorreo.innerHTML = correoPersona;
-    
-            direccion = document.createElement("td");
-            direccion.innerHTML = direPersona;
-    
-            modifica = document.createElement("td");
-            elimina = document.createElement("td");
-    
-            accion1 = document.createElement("a");
-            accion1.innerHTML = "Modifica";
-            accion1.addEventListener("click", () => { modificar(accion1); });
-            modifica.appendChild(accion1);
-    
-            accion2 = document.createElement("a");
-            accion2.innerHTML = "Eliminar";
-            accion2.addEventListener("click", () => { eliminar(accion2); });
-            elimina.appendChild(accion2);
-    
-            telefono.appendChild(enlaceTelefono); // Añade el enlace a la celda de teléfono
-            correo.appendChild(enlaceCorreo);
-    
-            nuevoRegistro.appendChild(id);
-            nuevoRegistro.appendChild(nombre);
-            nuevoRegistro.appendChild(telefono);
-            nuevoRegistro.appendChild(correo);
-            nuevoRegistro.appendChild(direccion);
-            nuevoRegistro.appendChild(modifica);
-            nuevoRegistro.appendChild(elimina);
-    
-            tabla.appendChild(nuevoRegistro); // Añade la nueva fila a la tabla
+            const nombrePersona = getParameter("nombre");
+            const telPersona = getParameter("telefono");
+            const correoPersona = getParameter("email");
+            const direPersona = getParameter("direccion");
+            const contraPersona = getParameter("contraseña1");
+            const contra2Persona = getParameter("contraseña2");
+            const idPersona = getParameter("id");
+
+            if (idPersona) {
+                eliminarRegistroPorId(idPersona);
+            }
+
+            if (nombrePersona && telPersona && correoPersona && direPersona && contraPersona && contra2Persona) {
+                if (nombrePersona !== "" && telPersona !== "" && correoPersona !== "" && direPersona !== "" && contraPersona !== "" && contra2Persona !== "") {
+                    agregarFila(nombrePersona, telPersona, correoPersona, direPersona, idPersona);
+                }
+            }
         }
-    }
-    
-    
+
+        // Inicializar registros
+        function inicializarRegistros() {
+            agregarFila("Daniel Aguilar", "7771234567", "danielAguilar@gmail.com", "Mor, Cuernavaca, Calle Daniel Aguilar", 1);
+            agregarFila("Cesar Arizmendi", "7772345678", "cesarArizmendi@gmail.com", "Mor, Cuernavaca, Calle Cesar Arizmendi", 2);
+            agregarFila("Janetthe Millán", "7773456789", "janMillan@gmail.com", "Mor, Cuernavaca, Calle Janetthe Millán", 3);
+            agregarFila("Maximilano Roque", "7770123456", "maxRoque@gmail.com", "Mor, Cuernavaca, Calle Maximiliano Roque", 4);
         }
-     
-        window.addEventListener("load", registrarProducto);
-    
+
+        // Función para agregar una nueva fila a la tabla
+        function agregarFila(nombre, telefono, correo, direccion, id = null) {
+            const tabla = document.getElementById("cuerpoTabla");
+            const nuevoRegistro = document.createElement("tr");
+
+            if (!id) {
+                id = obtenerNuevoId();
+            }
+
+            const idTh = document.createElement("th");
+            idTh.innerHTML = id;
+            idTh.scope = "row";
+
+            const nombreTd = document.createElement("td");
+            nombreTd.innerHTML = nombre;
+
+            const telefonoTd = document.createElement("td");
+            const enlaceTelefono = document.createElement("a");
+            enlaceTelefono.href = `tel:${telefono}`;
+            enlaceTelefono.innerHTML = telefono;
+            telefonoTd.appendChild(enlaceTelefono);
+
+            const correoTd = document.createElement("td");
+            const enlaceCorreo = document.createElement("a");
+            enlaceCorreo.href = `mailto:${correo}`;
+            enlaceCorreo.innerHTML = correo;
+            correoTd.appendChild(enlaceCorreo);
+
+            const direccionTd = document.createElement("td");
+            direccionTd.innerHTML = direccion;
+
+            const modificaTd = document.createElement("td");
+            const accionModificar = document.createElement("a");
+            accionModificar.innerHTML = "Modificar";
+            accionModificar.addEventListener("click", () => { modificar(accionModificar); });
+            modificaTd.appendChild(accionModificar);
+
+            const eliminaTd = document.createElement("td");
+            const accionEliminar = document.createElement("a");
+            accionEliminar.innerHTML = "Eliminar";
+            accionEliminar.addEventListener("click", () => { eliminar(accionEliminar); });
+            eliminaTd.appendChild(accionEliminar);
+
+            nuevoRegistro.appendChild(idTh);
+            nuevoRegistro.appendChild(nombreTd);
+            nuevoRegistro.appendChild(telefonoTd);
+            nuevoRegistro.appendChild(correoTd);
+            nuevoRegistro.appendChild(direccionTd);
+            nuevoRegistro.appendChild(modificaTd);
+            nuevoRegistro.appendChild(eliminaTd);
+
+            tabla.appendChild(nuevoRegistro);
+        }
+
+        // Obtener un nuevo ID único para un nuevo registro
+        function obtenerNuevoId() {
+            const tabla = document.getElementById("cuerpoTabla");
+            const rows = tabla.getElementsByTagName("tr");
+            let maxId = 0;
+            for (let i = 0; i < rows.length; i++) {
+                const id = parseInt(rows[i].getElementsByTagName("th")[0].innerHTML);
+                if (id > maxId) {
+                    maxId = id;
+                }
+            }
+            return maxId + 1;
+        }
+
+        // Eliminar un registro por ID
+        function eliminarRegistroPorId(id) {
+            const tabla = document.getElementById("cuerpoTabla");
+            const rows = tabla.getElementsByTagName("tr");
+            for (let i = 0; i < rows.length; i++) {
+                if (rows[i].getElementsByTagName("th")[0].innerHTML == id) {
+                    tabla.deleteRow(i);
+                    break;
+                }
+            }
+        }
+
+        // Modificar un registro
         function modificar(element) {
-          element.parentElement.parentElement.remove();
+            const row = element.parentElement.parentElement;
+            const cells = row.getElementsByTagName("td");
+            const id = row.getElementsByTagName("th")[0].innerText;
+
+            const nombre = cells[0].innerText;
+            const telefono = cells[1].innerText;
+            const correo = cells[2].innerText;
+            const direccion = cells[3].innerText;
+
+            const url = `crearCuenta.html?id=${id}&nombre=${encodeURIComponent(nombre)}&telefono=${encodeURIComponent(telefono)}&email=${encodeURIComponent(correo)}&direccion=${encodeURIComponent(direccion)}`;
+
+            window.location.href = url;
         }
-    
+
+        // Eliminar un registro
         function eliminar(element) {
-          element.parentElement.parentElement.remove();
+            element.parentElement.parentElement.remove();
         }
-      </script>
+
+        // Inicializar la página
+        window.addEventListener("load", () => {
+            inicializarRegistros();
+            registrarProducto();
+        });
+    </script>
+    
 </body>
 </html>
